@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.celldata.membrane.mapper.UserMapper">
+    <resultMap id="userMap" type="cloud.celldata.membrane.pojo.entity.UserEntity">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="full_Name" property="fullName" jdbcType="VARCHAR" />
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="login_num" property="loginNum" jdbcType="INTEGER"/>
+        <result column="ACTIVE_FLAG" property="activeFlag" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getUserByUser" parameterType="cloud.celldata.membrane.pojo.entity.UserEntity" resultMap="userMap">
+        select
+        ID,
+        USER_NAME,
+        PASSWORD,
+        FULL_NAME,
+        TELEPHONE,
+        EMAIL,
+        LOGIN_NUM,
+        ACTIVE_FLAG
+        from sso_user
+        <where>
+            <if test="id!=null and ''!=id">
+                ID=#{id}
+            </if>
+            <if test="userName!=null and ''!=userName">
+                and USER_NAME=#{userName}
+            </if>
+            <if test="password!=null and ''!=password">
+                and PASSWORD=#{password}
+            </if>
+            <if test="telephone!=null and ''!=telephone">
+                and TELEPHONE=#{telephone}
+            </if>
+            <if test="email!=null and ''!=email">
+                and EMAIL=#{email}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectUserByRoleId" parameterType="Integer" resultType="Integer">
+        SELECT
+            u.ID
+        FROM
+            sso_role as role
+         JOIN sso_user_role as rela on rela.ROLE_ID=role.ID and rela.ENABLE_FLAG=1 and role.ENABLE_FLAG=1
+         JOIN sso_user as u on u.ID=rela.USER_ID and u.ENABLE_FLAG=1
+        where role.id=#{roleId}
+    </select>
+
+
+</mapper>

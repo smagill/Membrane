@@ -1,0 +1,47 @@
+spring:
+  profiles:
+    active: dev
+  messages:
+    basename: i18n/message
+    encoding: UTF-8
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+# 权限管理平台用于解密token  与数据库一致
+ssl_token: 444444
+#登录token的有效时间 30分钟
+active_time: 1800
+
+EMAIL_TEMPLATE: 权限管理平台找回密码功能验证码，30分钟内有效
+
+membrane:
+  secret: 444444
+  issuer: membraneIssueCenter
+  expire_time: 1800
+  mail:
+    template: 权限管理平台找回密码功能验证码，30分钟内有效
+  filter:
+    anonymousURIs:
+      - "/api/token/login"
+      - "/api/user/exists"
+      - "/api/user/send"
+      - "/api/user/forget"
+      - "/api/user/fetch"
+      - "/api/app/fetch"
+      - "/api/role/list"
+
+
+# 短信服务参数
+ali_msg:
+  domain: dysmsapi.aliyuncs.com
+  region_id: default
+  sign_name: 杭州博彦信息技术有限公司
+  new_user_template_code: SMS_164435174
+  reset_template_code: SMS_164385763
+  access_key:
+    id: LTAIPMraSYQk7Sw2
+    secret: 15sOJ3CGnLSfmzTSMGMMJR6vmuIyMx
